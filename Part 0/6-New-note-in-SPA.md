@@ -4,10 +4,13 @@
       participant browser
       participant server
   
-      browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note 
-      activate server 
-      server-->>browser: The HTTP Status code 201 - Note created | No Redirect
+      Note right of browser: User submits new note form
+  
+      browser->>browser: JavaScript prevents default form submission
+      browser->>browser: Adds new note to DOM
+  
+      browser->>server: POST /new_note_spa
+      activate server
+      server-->>browser: HTTP 201 Created (JSON of new note)
       deactivate server
-      
-      Note right of browser: The payload contains the content and the timestamp
 ```
