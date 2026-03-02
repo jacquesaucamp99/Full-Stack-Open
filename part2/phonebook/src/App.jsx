@@ -1,15 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Filter from './Components/Filter'
 import Form from './Components/Form'
 import Persons from './Components/Persons'
+import axios from 'axios'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-1234567', id: 1 }
-  ]) 
+  const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filterText, setFilterText] = useState('')
+
+  // The useEffect hook is used to fetch data from the server when the component mounts.
+  useEffect(() => {
+  console.log('effect')
+  axios
+    .get('http://localhost:3001/persons')
+    .then(response => {
+      console.log('promise fulfilled')
+      setPersons(response.data)
+    })
+}, [])
+  console.log('render', persons.length, 'persons')
   
   // Check if the name already exists in the phonebook
   const checkNameExists = (name) => {
