@@ -1,36 +1,73 @@
 import { useState } from 'react'
+import Filter from './Components/Filter'
+import Form from './Components/Form'
+import Persons from './Components/Persons'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', number: '040-1234567', id: 1 }
   ]) 
   const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
+  const [filterText, setFilterText] = useState('')
   
-  {/*event handler for form submit
-    This is used to add new names to the phonebook */
+  // Check if the name already exists in the phonebook
+  const checkNameExists = (name) => {
+    // persons.some() returns true if at least one element in the array satisfies the condition
+    // person: is the function parameter that represents each element in the persons array
+    // person.name === name: checks if the name property of the current person 
+    // object is equal to the name parameter passed to the function
+    return persons.some(person => person.name === name)
   }
+
+  const checkNumber = (number) => {
+    return number.trim() === '' || !/^\d{3}-\d{7}$/.test(number)
+  }
+
+  // Add a new name to the phonebook
+  // This is called on submit
   const addName = (event) => {
     event.preventDefault()
     const nameObject = {
-      name: newName
+      name: newName,
+      number: newNumber,
     }
+    if (checkNameExists(newName)) {
+      alert(`${newName} is already added to phonebook`)
+      return
+    }
+
+    // Add a check to ensure that the number is not empty and is a valid format (e.g., contains only digits and optional dashes)
+    if (checkNumber(newNumber)) {
+      alert('Please enter a valid number in the format XXX-XXXXXXX')
+      return
+    }
+
     setPersons(persons.concat(nameObject))
     setNewName('')
+    setNewNumber('')
   }
+  
+  // This variable determines which persons to show based on the value of filterText
+  const personsToShow = filterText
+    ? persons.filter(person => person.name.toLowerCase().includes(filterText.toLowerCase())) 
+    : persons
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addName}>
-        <div>
-          name: <input value={newName} onChange={(event) => setNewName(event.target.value)}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <div>
+        <Filter filterText={filterText} handleFilterChange={(event) => setFilterText(event.target.value)}/>
+      </div>
+      <h2>Add a new person</h2>
+      <Form newName={newName}
+        newNumber={newNumber}
+        handleNameChange={(event) => setNewName(event.target.value)}
+        handleNumberChange={(event) => setNewNumber(event.target.value)}
+        addName={addName}
+      />
       <h2>Numbers</h2>
-      {persons.map(person => <p key={person.name}>{person.name}</p>)}
+      <Persons personsToShow={personsToShow} />
     </div>
   )
 }
