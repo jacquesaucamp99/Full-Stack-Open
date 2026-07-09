@@ -1,29 +1,10 @@
 {
   "persons": [
     {
-      "name": "Jabulani Aucamp",
-      "number": "072-1234567",
-      "id": "1"
-    },
-    {
-      "name": "John Doe",
-      "number": "072-7654321",
-      "id": "2"
-    },
-    {
-      "name": "Jane Smith",
-      "number": "072-9876543",
-      "id": "3"
-    },
-    {
-      "name": "Alice Johnson",
-      "number": "072-5555555",
-      "id": "4"
-    },
-    {
-      "name": "Bob Brown",
-      "number": "072-4444444",
-      "id": "5"
+      "id": "6545",
+      "name": "jacques a",
+      "number": "918-2002990"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
