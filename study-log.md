@@ -18,4 +18,4 @@ Total: 20 hours
 
 ## Part 3
 
-10-Jul-2026
+10-Jul-2026: 2 hours
