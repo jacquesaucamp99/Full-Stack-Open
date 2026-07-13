@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'https://phonebook-backend-brisk-inlet-8863.fly.dev/api/persons'
+const baseUrl = '/api/persons'
 
 const getAll = () => {
     const request = axios.get(baseUrl)
